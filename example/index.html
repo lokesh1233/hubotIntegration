@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>chat</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" type="text/css" href="style.css">
+
+<head>
+<title>chat</title>
+</head>
+<body>
+	<div class="container-fluid">
+		<div class="panel">
+			<!--Heading-->
+			<div class="panel-heading">
+				<div class="panel-control" class="col-lg-6 col-md-3 col-xs-3">
+					<h3 class="panel-title" id="UserName">Let's Chat</h3>
+				</div>
+			</div>
+			<!-- chat body-->
+			<div id="demo-chat-body" class="demo-chat-body">
+				<div class="nano has-scrollbar">
+					<div class="nano-content pad-all" tabindex="0">
+						<ul class="list-unstyled media-block" id="chatBody">
+
+						</ul>
+					</div>
+				</div>
+				<!--chat footer-->
+				<div class="panel-footer">
+					<div class="row">
+						<div class="col-lg-10 col-md-10 col-xs-10">
+							<input id="m" type="text" placeholder="Enter your text"
+								class="form-control chat-input">
+						</div>
+						<div class="col-lg-2 col-md-2 col-xs-3">
+							<button class="btn btn-primary btn-block" type="submit"
+								id="submit">Send</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<script>
+     
+
+      $('#submit').click(function(){
+    	  debugger;
+    	  var value=$('#m').val();
+    	  if(value==""){
+    		  return;
+    	  }
+    	  $('#chatBody').append('<li class="mar-btm"><div class="media-body pad-hor speech-right"><div class="speech"><p>'+value+'</p><p class="speech-time"><i class="fa fa-clock-o fa-fw"></i></p></div></div></li>');
+    	  var xhr=new XMLHttpRequest()
+    	  xhr.onreadystatechange = function(OData)
+    	    {
+    	        if (xhr.readyState == 4 && xhr.status == 200)
+    	        {
+    	        	debugger;
+    	        	var data=JSON.parse(OData.currentTarget.response);
+    	        	 $('#chatBody').append('<li class="mar-btm"><div class="media-body pad-hor"><div class="speech"><p>'+data.message+'</p><p class="speech-time"><i class="fa fa-clock-o fa-fw"></i></p></div></div></li>');
+    	        }
+    	    }; 
+    	  xhr.open("POST", "../proxyForAI/proxy/hubot/notify/585164", true);
+    	  xhr.setRequestHeader("Content-Type", "application/json");
+    	  xhr.send(JSON.stringify({"message":value})) 
+    	  $('#m').val('');
+      })
+
+       /*  socket.on('chat message', function(data){
+      $('#chatBody').append('<li class="mar-btm"><div class="media-body pad-hor"><div class="speech"><p>'+data.message+'</p><p class="speech-time"><i class="fa fa-clock-o fa-fw"></i></p></div></div></li>');
+    });
+        socket.on('client_msg', function(data){sssss
+          $('#chatBody').append('<li class="mar-btm"><div class="media-body pad-hor speech-right"><div class="speech"><p>'+data.message+'</p><p class="speech-time"><i class="fa fa-clock-o fa-fw"></i></p></div></div></li>');
+        }); */
+      </script>
+</body>
+</html>
