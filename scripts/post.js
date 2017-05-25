@@ -7,7 +7,7 @@
       room = req.params.room;
       message = req.body.message;
 
-      post_data=JSON.stringify({botcust2:"f72a712b1e7aa47e",
+      post_data=JSON.stringify({
         "lang":"en",
         "query":message,
         "sessionId":"6853bd05-bea4-2c0f-8389-0e9c0f1a6e40"});
@@ -32,10 +32,7 @@
           str += chunk;
           });
         response.on('end', function () {
-          console.log(str);
-
           var parseMessage=JSON.parse(str).result.fulfillment.speech;
-
         var body=JSON.stringify({
     message: parseMessage
   });
